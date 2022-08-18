@@ -1,9 +1,17 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { store } from 'redux/store';
+import { setPokemonsList } from 'redux/pokedex/pokedexSlice';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('main page tests', () => {
+
+  it('should be empty on load', () => {
+    const pokedex = store.getState().pokedex;
+    expect(pokedex.pokemons.length).toBe(0);
+  })
+
+  it('render page without pokemons', async () => {
+    const result = store.dispatch(setPokemonsList([]));
+    const pokemons = result.payload;
+
+    expect(pokemons.length).toBe(0);
+  });
 });
